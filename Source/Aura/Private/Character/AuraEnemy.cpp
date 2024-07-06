@@ -13,10 +13,15 @@ AAuraEnemy::AAuraEnemy()
 
 void AAuraEnemy::HighlightActor()
 {
-	highlighted = true;
+	GetMesh()->SetRenderCustomDepth(true);
+	GetMesh()->SetCustomDepthStencilValue(250);
+
+	Weapon->SetRenderCustomDepth(true);
+	Weapon->SetCustomDepthStencilValue(250);
 }
 
 void AAuraEnemy::UnHighlightActor()
 {
-	highlighted = false;
+	GetMesh()->SetRenderCustomDepth(false);
+	Weapon->SetRenderCustomDepth(false);
 }
