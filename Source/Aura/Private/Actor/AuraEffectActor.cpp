@@ -16,7 +16,6 @@ AAuraEffectActor::AAuraEffectActor()
 
 	SetRootComponent(Mesh);
 	Sphere->SetupAttachment(GetRootComponent());
-	
 }
 
 void AAuraEffectActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
