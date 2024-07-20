@@ -42,19 +42,29 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 	}
 }
 
+void AAuraEffectActor::ApplyMultipleEffects(AActor* TargetActor, TArray<TSubclassOf<UGameplayEffect>> Effects)
+{
+	for (const auto Effect : Effects)
+	{
+		ApplyEffectToTarget(TargetActor, Effect);
+	}
+}
+
 void AAuraEffectActor::OnOverlap(AActor* TargetActor)
 {
 	if (InstantEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
 	{
-		ApplyEffectToTarget(TargetActor, InstantGameplayEffectClass);
+		ApplyMultipleEffects(TargetActor, InstantGameplayEffects);
 	}
 	if (DurationEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
 	{
-		ApplyEffectToTarget(TargetActor, DurationGameplayEffectClass);
+		// ApplyEffectToTarget(TargetActor, DurationGameplayEffectClass);
+		ApplyMultipleEffects(TargetActor, DurationGameplayEffects);
 	}
 	if (InfiniteEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
 	{
-		ApplyEffectToTarget(TargetActor, InfiniteGameplayEffectClass);
+		// ApplyEffectToTarget(TargetActor, InfiniteGameplayEffectClass);
+		ApplyMultipleEffects(TargetActor, InfiniteGameplayEffects);
 	}
 }
 
@@ -62,15 +72,18 @@ void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 {
 	if (InstantEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
 	{
-		ApplyEffectToTarget(TargetActor, InstantGameplayEffectClass);
+		// ApplyEffectToTarget(TargetActor, InstantGameplayEffectClass);
+		ApplyMultipleEffects(TargetActor, InstantGameplayEffects);
 	}
 	if (DurationEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
 	{
-		ApplyEffectToTarget(TargetActor, DurationGameplayEffectClass);
+		// ApplyEffectToTarget(TargetActor, DurationGameplayEffectClass);
+		ApplyMultipleEffects(TargetActor, DurationGameplayEffects);
 	}
 	if (InfiniteEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
 	{
-		ApplyEffectToTarget(TargetActor, InfiniteGameplayEffectClass);
+		// ApplyEffectToTarget(TargetActor, InfiniteGameplayEffectClass);
+		ApplyMultipleEffects(TargetActor, InfiniteGameplayEffects);
 	}
 	if (InfiniteEffectRemovalPolicy == EEffectRemovalPolicy::RemoveOnEndOverlap)
 	{
