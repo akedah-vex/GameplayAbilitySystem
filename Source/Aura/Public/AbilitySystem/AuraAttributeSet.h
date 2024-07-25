@@ -90,5 +90,5 @@ public:
 
 private:
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props);
-	
+	void ClampAttributeValuesPostGameplayEffect(const FGameplayEffectModCallbackData& Data);
 };

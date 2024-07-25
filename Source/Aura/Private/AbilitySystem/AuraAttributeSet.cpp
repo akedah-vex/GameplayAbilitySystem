@@ -27,30 +27,12 @@ void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
 	Super::PreAttributeChange(Attribute, NewValue);
-	
 }
 
 void UAuraAttributeSet::PreAttributeBaseChange(const FGameplayAttribute& Attribute, float& NewValue) const
 {
 	Super::PreAttributeBaseChange(Attribute, NewValue);
-	if (Attribute == GetHealthAttribute())
-	{
-		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
-		UE_LOG(LogTemp, Warning, TEXT("Health: %f"), NewValue)
-	}
-	if (Attribute == GetMaxHealthAttribute())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("MaxHealth: %f"), NewValue)
-	}
-	if (Attribute == GetManaAttribute())
-	{
-		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxMana());
-		UE_LOG(LogTemp, Warning, TEXT("Mana: %f"), NewValue)
-	}
-	if (Attribute == GetMaxManaAttribute())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("MaxMana: %f"), NewValue)
-	}
+	UE_LOG(LogTemp, Warning, TEXT("%s: %f"), *Attribute.AttributeName, NewValue)
 }
 
 void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props)
@@ -86,6 +68,19 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 	}
 }
 
+void UAuraAttributeSet::ClampAttributeValuesPostGameplayEffect(const FGameplayEffectModCallbackData& Data)
+{
+	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+	{
+		SetHealth(FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));
+	}
+
+	if (Data.EvaluatedData.Attribute == GetManaAttribute())
+	{
+		SetMana(FMath::Clamp(GetMana(), 0.f, GetMaxMana()));
+	}
+}
+
 void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
@@ -93,7 +88,7 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	// Source = causer of the effect, Target = receiver(target) of the effect (owner of THIS attribute set)
 	FEffectProperties EffectProperties;
 	SetEffectProperties(Data, EffectProperties);
-	
+	ClampAttributeValuesPostGameplayEffect(Data);
 }
 
 void UAuraAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
