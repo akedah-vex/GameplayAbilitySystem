@@ -31,14 +31,14 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FString("Increases max health and health regeneration")
 	);
 
-	GameplayTags.Attributes_Secondary_MaxHealth = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("Attributes.Secondary.MaxHeatlh"),
-		FString("The maximum amount of health.")
-	);
-
 	/**
 	 * Secondary Attribute Tags
 	 */
+	GameplayTags.Attributes_Secondary_MaxHealth = UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Attributes.Secondary.MaxHeatlh"),
+	FString("The maximum amount of health.")
+	);
+	
 	GameplayTags.Attributes_Secondary_MaxMana = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.Secondary.MaxMana"),
 		FString("The maximum amount of mana.")
@@ -51,7 +51,7 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 
 	GameplayTags.Attributes_Secondary_ArmorPenetration = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.Secondary.ArmorPenetration"),
-		FString("Ignored Percentage of enemy armor, increases critical hit chance")
+		FString("Ignored Percentage of enemy armor, increases critical hit chance.")
 	);
 
 	GameplayTags.Attributes_Secondary_BlockChance = UGameplayTagsManager::Get().AddNativeGameplayTag(
@@ -61,7 +61,7 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 
 	GameplayTags.Attributes_Secondary_CriticalHitDamage = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.Secondary.CriticalHitDamage"),
-		FString("The base extra damage added to a critical hit")
+		FString("The base extra damage added to a critical hit.")
 	);
 
 	GameplayTags.Attributes_Secondary_CriticalHitResistance = UGameplayTagsManager::Get().AddNativeGameplayTag(
