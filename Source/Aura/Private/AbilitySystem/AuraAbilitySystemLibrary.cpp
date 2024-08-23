@@ -10,7 +10,7 @@
 
 class AAuraPlayerState;
 
-UOverlayWidgetController* UAuraAbilitySystemLibrary::GetOverlayWidgetController(const UObject* WorldContextObject)
+TTuple<AAuraHUD*, FWidgetControllerParams> UAuraAbilitySystemLibrary::GetWidgetControllerPackage(const UObject* WorldContextObject)
 {
 	if (APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0))
 	{
@@ -20,12 +20,24 @@ UOverlayWidgetController* UAuraAbilitySystemLibrary::GetOverlayWidgetController(
 		{
 			UAbilitySystemComponent* ASC = PS->GetAbilitySystemComponent();
 			UAttributeSet* AS = PS->GetAttributeSet();
-
 			const FWidgetControllerParams WidgetControllerParams(PC, PS, ASC, AS);
-			
-			return AuraHUD->GetOverlayWidgetController(WidgetControllerParams);
+			return TTuple<AAuraHUD*, FWidgetControllerParams>(AuraHUD, WidgetControllerParams);
 		}
 	}
-
-	return nullptr;
+	
+	return TTuple<AAuraHUD*, FWidgetControllerParams>(nullptr, FWidgetControllerParams());
 }
+
+UOverlayWidgetController* UAuraAbilitySystemLibrary::GetOverlayWidgetController(const UObject* WorldContextObject)
+{
+	TTuple<AAuraHUD*, FWidgetControllerParams> WidgetControllerPackage = GetWidgetControllerPackage(WorldContextObject);
+	return WidgetControllerPackage.Key->GetOverlayWidgetController(WidgetControllerPackage.Value);
+}
+
+UAttributeMenuWidgetController* UAuraAbilitySystemLibrary::GetAttributeMenuWidgetController(const UObject* WorldContextObject)
+{
+	TTuple<AAuraHUD*, FWidgetControllerParams> WidgetControllerPackage = GetWidgetControllerPackage(WorldContextObject);
+	return WidgetControllerPackage.Key->GetAttributeMenuWidgetController(WidgetControllerPackage.Value);
+}
+
+
