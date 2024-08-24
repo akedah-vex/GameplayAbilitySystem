@@ -5,3 +5,6 @@
 #include "CoreMinimal.h"
 
 #define RED_HIGHLIGHT 250
+
+template<class T>
+using TFunctionPointer = T(*)();
